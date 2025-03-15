@@ -4,6 +4,19 @@ from PIL import Image
 import os
 from scipy import ndimage
 from scipy.ndimage import uniform_filter
+import rosbag
+from cv_bridge import CvBridge
+import cv2
+from tqdm import tqdm
+
+
+def images_to_video(cv2_images: list, video_path: str, fps=10):
+    height, width, _ = cv2_images[0].shape  # Get dimensions from first frame
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    out = cv2.VideoWriter(video_path, fourcc, fps, (width, height), True)
+    for img in tqdm(cv2_images, desc="Writing Video"):
+        out.write(img)
+    out.release()
 
 
 def image_cropper(image_path):
@@ -61,6 +74,17 @@ def smoothing_filter(segmentation, window_size=11):
 def compute_confidence_array(binary_array, window_size=21):
     conf_score = uniform_filter(binary_array.astype(float), size=window_size, mode='constant', cval=0.0)
     return conf_score
+
+
+def read_compr_images_from_bag(bag_file, topic):
+    bridge = CvBridge()
+    bag = rosbag.Bag(bag_file)
+    images = []
+    for topic, msg, t in bag.read_messages(topics=[topic]):
+        cv2_frame_np = bridge.compressed_imgmsg_to_cv2(msg, desired_encoding="passthrough")
+        images.append(cv2_frame_np)
+    bag.close()
+    return images
 
 
 if __name__ == "__main__":
