@@ -1,5 +1,0 @@
-{
-    "1": "def is_safe(pixel_loc):\n    if terrain(pixel_loc) == 0:\n        if distance_to_person(pixel_loc) > 0.0 and distance_to_pole(pixel_loc) > 0.0:\n            return True\n    return False",
-    "2": "def is_safe(pixel_loc):\n    if terrain(pixel_loc) == 0:\n        if distance_to_person(pixel_loc) > 0.0 and distance_to_pole(pixel_loc) > 0.0:\n            return True\n    return False",
-    "3": "def is_safe(pixel_loc):\n    if terrain(pixel_loc) == 0:\n        if distance_to_person(pixel_loc) > 0.0 and distance_to_pole(pixel_loc) > 0.0 and distance_to_bush(pixel_loc) > 0.244441:\n            return True\n    return False"
-}

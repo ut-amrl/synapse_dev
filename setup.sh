@@ -27,3 +27,8 @@ wget https://huggingface.co/depth-anything/Depth-Anything-V2-Metric-Hypersim-Lar
 cd ../../../..
 
 pip3 uninstall numpy && pip3 install "numpy<1.26.4" && pip3 install supervision==0.6.0 && pip3 install open3d==0.16.0
+
+cd third_party/pips/
+export ROS_PACKAGE_PATH=$(pwd):$ROS_PACKAGE_PATH
+make -j$(nproc)
+cd ../..
