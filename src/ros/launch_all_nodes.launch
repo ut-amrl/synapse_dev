@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- Parameters -->
+    <arg name="image_topic" default="/camera/rgb/image_raw/compressed" />
+    <arg name="test_image_path" default="test/000000.png" />
+    <arg name="publish_rate" default="30.0" />
+    <arg name="do_car" default="true" />
+    <arg name="use_test_mode" default="false" />
+
+    <!-- Terrain Node -->
+    <node name="terrain_node" pkg="synapse_dev" type="terrain_node.py" output="screen" cwd="node">
+        <param name="image_topic" value="$(arg image_topic)" />
+        <param name="test_image_path" value="$(arg test_image_path)" />
+        <param name="publish_rate" value="$(arg publish_rate)" />
+        <param name="use_test_mode" value="$(arg use_test_mode)" />
+    </node>
+
+    <!-- Depth Node -->
+    <node name="depth_node" pkg="synapse_dev" type="depth_node.py" output="screen" cwd="node">
+        <param name="image_topic" value="$(arg image_topic)" />
+        <param name="test_image_path" value="$(arg test_image_path)" />
+        <param name="publish_rate" value="$(arg publish_rate)" />
+        <param name="use_test_mode" value="$(arg use_test_mode)" />
+    </node>
+
+    <!-- GSAM Node -->
+    <node name="gsam_node" pkg="synapse_dev" type="gsam_node.py" output="screen" cwd="node">
+        <param name="image_topic" value="$(arg image_topic)" />
+        <param name="test_image_path" value="$(arg test_image_path)" />
+        <param name="publish_rate" value="$(arg publish_rate)" />
+        <param name="use_test_mode" value="$(arg use_test_mode)" />
+    </node>
+
+    <!-- Processor Node -->
+    <node name="processor_node" pkg="synapse_dev" type="processor_node.py" output="screen" cwd="node">
+        <param name="image_topic" value="$(arg image_topic)" />
+        <param name="test_image_path" value="$(arg test_image_path)" />
+        <param name="publish_rate" value="$(arg publish_rate)" />
+        <param name="do_car" value="$(arg do_car)" />
+        <param name="use_test_mode" value="$(arg use_test_mode)" />
+    </node>
+
+</launch> 
